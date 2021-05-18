@@ -15,7 +15,6 @@ public class LabyrinthModel implements Levels{
                 board[i][j] = new ReadOnlyObjectWrapper<Square>(lvl1Board[i][j]);
             }
         }
-
     }
 
     public ReadOnlyObjectProperty<Square> squareProperty(int i, int j) {
@@ -26,7 +25,10 @@ public class LabyrinthModel implements Levels{
         return board[i][j].get();
     }
 
-
+    public static boolean isOnBoard(Position position) {
+        return 0 <= position.row() && position.row() < BOARD_SIZE
+                && 0 <= position.col() && position.col() < BOARD_SIZE;
+    }
 
 
     public String toString() {

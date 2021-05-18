@@ -1,7 +1,6 @@
 package controller;
 
 
-
 import javax.inject.Inject;
 
 import javafx.application.Application;
