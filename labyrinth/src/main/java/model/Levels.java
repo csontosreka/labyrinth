@@ -1,6 +1,8 @@
 package model;
 
-
+/**
+ * An interface to get the levels of the game.
+ */
 public interface Levels {
 
     Square lvl1Board[][] = {

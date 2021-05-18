@@ -1,7 +1,13 @@
 package model;
 
+/**
+ * An enum representing the directions.
+ */
 public enum StepDirection implements Direction{
 
+    /**
+     * Four possible direction.
+     */
     UP(-2, 0),
     DOWN(2, 0),
     LEFT(0, -2),
@@ -24,6 +30,12 @@ public enum StepDirection implements Direction{
         this.colChange = colChange;
     }
 
+    /**
+     * Moves the marker in given direction.
+     * @param rowChange change of the row
+     * @param colChange change of the column
+     * @return the direction of movement
+     */
     public static StepDirection of(int rowChange, int colChange) {
         for (var direction : values()) {
             if (direction.rowChange == rowChange && direction.colChange == colChange) {

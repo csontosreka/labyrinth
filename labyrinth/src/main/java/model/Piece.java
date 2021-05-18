@@ -3,6 +3,9 @@ package model;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
+/**
+ * A class representing the players marker and it's position on the board.
+ */
 public class Piece {
     private final ObjectProperty<Position> position = new SimpleObjectProperty<>();
 
@@ -14,6 +17,10 @@ public class Piece {
         return position.get();
     }
 
+    /**
+     * Moves the marker to the new direction.
+     * @param direction coordinates of the given direction
+     */
     public void moveTo(Direction direction) {
         Position newPosition = position.get().moveTo(direction);
         position.set(newPosition);
