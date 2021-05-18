@@ -15,6 +15,7 @@ public class LabyrinthModel implements Levels{
                 board[i][j] = new ReadOnlyObjectWrapper<Square>(lvl1Board[i][j]);
             }
         }
+
     }
 
     public ReadOnlyObjectProperty<Square> squareProperty(int i, int j) {
@@ -25,14 +26,8 @@ public class LabyrinthModel implements Levels{
         return board[i][j].get();
     }
 
-    public void move(int i, int j) {
-        board[i][j].set(
-                switch (board[i][j].get()) {
-                    case NONE -> Square.POS;
-                    default -> throw new IllegalStateException("Unexpected value: " + board[i][j].get());
-                }
-        );
-    }
+
+
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
