@@ -32,7 +32,7 @@ public class OpeningController {
         } else {
             fxmlLoader.setLocation(getClass().getResource("/fxml/ui.fxml"));
             Parent root = fxmlLoader.load();
-            fxmlLoader.<LabyrinthController>getController().setPlayerName(playerNameTextField.getText());
+            //fxmlLoader.<LabyrinthController>getController().setPlayerName(playerNameTextField.getText());
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
