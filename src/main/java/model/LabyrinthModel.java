@@ -2,6 +2,7 @@ package model;
 
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import org.tinylog.Logger;
 
 /**
  * Class representing the state of the puzzle.
@@ -53,14 +54,14 @@ public class LabyrinthModel implements Levels {
     }
 
     /**
-     * Checks if the position is on the board.
-     *
-     * @param position the current position.
-     *                 {@return {@code true} if the position is on the board, {@code false} otherwise.}
+     * Checks if the given coordinates are on the board.
+     * @param row index of the row
+     * @param col index of the column
+     * @return {@code true} if the given position is on the board, {@code false} otherwise
      */
-    public static boolean isOnBoard(Position position) {
-        return 0 <= Position.row() && Position.row() < BOARD_SIZE
-                && 0 <= Position.col() && Position.col() < BOARD_SIZE;
+    public static boolean isOnBoard(int row, int col) {
+        return 0 <= row && row < BOARD_SIZE
+                && 0 <= col && col < BOARD_SIZE;
     }
 
     /**
@@ -78,19 +79,27 @@ public class LabyrinthModel implements Levels {
             Position position = new Position(startRow + 2, startCol);
         }
 
-        Direction direction = StepDirection.of(row - Position.row(), col - Position.col());
-
-
         if (isValidDirection(row, col)) {
             prevWallColor = getNextWallColor(row, col);
-            System.out.println(Position.row());
-            System.out.println(Position.col());
-            //board[Position.row()][Position.col()] = new ReadOnlyObjectWrapper<Square>(Square.NONE); //TODO
+
+            if (isOnBoard(Position.row(), Position.col())){
+                board[Position.row()][Position.col()] = new ReadOnlyObjectWrapper<Square>(Square.NONE);
+            }
+
             Position position = new Position(row, col);
-            System.out.println(position);
+
             board[row][col] = new ReadOnlyObjectWrapper<Square>(Square.POS);
+
+            if(isGameOver(row, col, prevWallColor)){
+                Logger.debug("Game Over! No more moves left.");
+            }
+
+            if (isSolved()){
+                Logger.debug("Puzzle solved!");
+            }
         } else {
-            throw new IllegalArgumentException();
+            Logger.error("Can't move there!");
+
         }
 
     }
@@ -160,6 +169,36 @@ public class LabyrinthModel implements Levels {
         return true;
     }
 
+    /**
+     * Checks if the puzzle is solved or not.
+     * @return {@code true} if solved, {@code false} otherwise
+     */
+    public boolean isSolved(){
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            for (int j = 0; j < BOARD_SIZE; j++) {
+                if (getSquare(1, 5).equals(Square.POS)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks if there are any valid steps left.
+     * @param row number of the row
+     * @param col number of the column
+     * @param prevWallColor color of the previous wall
+     * @return {@code true} if there aren't any valid steps left, {@code false} otherwise
+     */
+    public boolean isGameOver(int row, int col, Square prevWallColor){
+        if (isValidDirection(row-2, col) || (isValidDirection(row+2, col))
+            || (isValidDirection(row, col - 2)) || (isValidDirection(row, col + 2))){
+            return false;
+        } else{
+            return true;
+        }
+    }
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
