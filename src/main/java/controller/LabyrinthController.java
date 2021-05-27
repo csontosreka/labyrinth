@@ -1,7 +1,14 @@
 package controller;
 
+import helper.Stopwatch;
+import javafx.animation.Animation;
+import javafx.application.Platform;
 import javafx.beans.binding.ObjectBinding;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -9,12 +16,30 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 import model.LabyrinthModel;
 import model.Square;
 import org.tinylog.Logger;
 
+import java.io.IOException;
+import java.time.Instant;
+
 public class LabyrinthController {
 
+    @FXML
+    private Label timeLabel;
+
+    @FXML
+    private Button resetButton;
+
+    @FXML
+    private Button giveUpButton;
+
+    @FXML
+    private Label nextWallColorLabel;
+
+    @FXML
+    private Label messageLabel;
 
     private String playerName;
 
@@ -28,6 +53,10 @@ public class LabyrinthController {
 
     private LabyrinthModel model = new LabyrinthModel();
 
+    private Stopwatch stopwatch = new Stopwatch();
+
+    private Instant startTime;
+
     @FXML
     private void initialize() {
         for (int i = 0; i < board.getRowCount(); i++) {
@@ -36,6 +65,9 @@ public class LabyrinthController {
                 board.add(square, j, i);
             }
         }
+        timeLabel.textProperty().bind(stopwatch.hhmmssProperty());
+        Platform.runLater(() -> messageLabel.setText(String.format("Good luck, %s!", playerName)));
+        stopwatch.start();
     }
 
     private StackPane createSquare(int i, int j) {
@@ -104,7 +136,44 @@ public class LabyrinthController {
         var row = GridPane.getRowIndex(square);
         var col = GridPane.getColumnIndex(square);
         Logger.debug("Click on square ({},{})", row, col);
-        model.move(row, col);
+
+        if(!model.isSolved()){
+            model.move(row, col);
+            initialize();
+        } else {
+            stopwatch.stop();
+            messageLabel.setText(String.format("Congratulations, %s!", playerName));
+        }
+
+    }
+
+    public void handleResetButton(ActionEvent actionEvent)  {
+        Logger.debug("{} is pressed", ((Button) actionEvent.getSource()).getText());
+        Logger.info("Resetting game");
+        stopwatch.stop();
+        resetGame();
+    }
+
+    private void resetGame(){
+        model = new LabyrinthModel();
         initialize();
+        startTime = Instant.now();
+        if (stopwatch.getStatus() == Animation.Status.PAUSED) {
+            stopwatch.reset();
+        }
+        stopwatch.start();
+    }
+
+    public void handleGiveUpButton(ActionEvent actionEvent) throws IOException {
+        var buttonText = ((Button) actionEvent.getSource()).getText();
+        Logger.debug("{} is pressed", buttonText);
+        if (buttonText.equals("Give Up")) {
+            stopwatch.stop();
+            Logger.info("The game has been given up");
+        }
+        /*Logger.debug("Saving result");
+        gameResultDao.persist(createGameResult());
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        ControllerHelper.loadAndShowFXML(fxmlLoader, "/fxml/scores.fxml", stage);*/
     }
 }
