@@ -144,20 +144,20 @@
                   <Insets left="60.0" />
                </padding>
             </Label>
-            <Label text="Next Wall's &#10;Color:" textAlignment="CENTER" textFill="#3212bf">
+            <Label text="Rules:" textAlignment="CENTER" textFill="#3212bf">
                <font>
                   <Font size="24.0" />
                </font>
                <padding>
-                  <Insets left="40.0" top="100.0" />
+                  <Insets left="80.0" top="100.0" />
                </padding>
             </Label>
-            <Label fx:id="nextWallColorLabel" textAlignment="CENTER" textFill="#2c11b2">
+            <Label fx:id="nextWallColorLabel" text="Red -&gt; White&#10;White -&gt; Blue&#10;Blue -&gt; Red" textAlignment="CENTER" textFill="#2c11b2">
                <font>
-                  <Font size="24.0" />
+                  <Font size="18.0" />
                </font>
                <padding>
-                  <Insets left="75.0" top="10.0" />
+                  <Insets left="60.0" top="10.0" />
                </padding>
             </Label>
             <Label fx:id="messageLabel" textAlignment="CENTER" textFill="#4114ba">
@@ -165,7 +165,7 @@
                   <Font size="18.0" />
                </font>
                <padding>
-                  <Insets left="10.0" />
+                  <Insets left="10.0" top="20.0" />
                </padding>
             </Label>
          </children>
