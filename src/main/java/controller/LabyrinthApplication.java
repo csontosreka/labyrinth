@@ -9,13 +9,22 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class LabyrinthApplication extends Application {
-    @Override
+    /*@Override
     public void start(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/ui.fxml"));
         stage.setTitle("Labyrinth");
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);
+        stage.show();
+    }
+    */
+
+    @Override
+    public void start(Stage stage) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/opening.fxml"));
+        stage.setTitle("Labyrinth");
+        stage.setScene(new Scene(root));
         stage.show();
     }
 

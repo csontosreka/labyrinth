@@ -19,6 +19,7 @@ public class LabyrinthController {
     private String playerName;
 
     public void setPlayerName(String playerName) {
+        Logger.info("Setting name to {}", playerName);
         this.playerName = playerName;
     }
 

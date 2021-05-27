@@ -17,6 +17,7 @@ import org.tinylog.Logger;
 
 public class OpeningController {
 
+    /*
     @Inject
     private FXMLLoader fxmlLoader;
 
@@ -38,5 +39,21 @@ public class OpeningController {
             stage.show();
             Logger.info("The user's name is set to {}, loading game scene", playerNameTextField.getText()); // TODO
         }
+    }*/
+
+    @FXML
+    private TextField playerName;
+    
+
+    @FXML
+    private void handleStartButton(ActionEvent event) throws IOException {
+        Logger.info("Name entered: {}", playerName.getText());
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui.fxml"));
+        Parent root = fxmlLoader.load();
+        LabyrinthController controller = fxmlLoader.<LabyrinthController>getController();
+        controller.setPlayerName(playerName.getText());
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 }
