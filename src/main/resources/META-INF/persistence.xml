@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.2">
-    <persistence-unit name="rolling-cubes" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="labyrinth" transaction-type="RESOURCE_LOCAL">
         <validation-mode>AUTO</validation-mode>
         <properties>
-            <property name="javax.persistence.jdbc.driver" value="${db.driver}"/>
-            <property name="javax.persistence.jdbc.url" value="${db.url}"/>
-            <property name="javax.persistence.jdbc.user" value="${db.user}"/>
-            <property name="javax.persistence.jdbc.password" value="${db.password}"/>
+            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:~/.h2/labyrinth"/>
+            <property name="javax.persistence.jdbc.user" value="root"/>
+            <property name="javax.persistence.jdbc.password" value="password"/>
             <property name="javax.persistence.schema-generation.database.action" value="create"/>
             <property name="javax.persistence.schema-generation.scripts.action" value="create"/>
             <property name="javax.persistence.schema-generation.scripts.create-target" value="./create.sql"/>

@@ -1,5 +1,6 @@
 package controller;
 
+import helper.ControllerHelper;
 import helper.Stopwatch;
 import javafx.animation.Animation;
 import javafx.application.Platform;
@@ -23,6 +24,8 @@ import javafx.stage.Stage;
 import model.LabyrinthModel;
 import model.Square;
 import org.tinylog.Logger;
+import result.GameResult;
+import result.GameResultDao;
 
 
 import javax.inject.Inject;
@@ -31,6 +34,9 @@ import java.time.Duration;
 import java.time.Instant;
 
 public class LabyrinthController {
+
+    @Inject
+    private FXMLLoader fxmlLoader;
 
     @FXML
     private Label timeLabel;
@@ -49,10 +55,10 @@ public class LabyrinthController {
 
     private String playerName;
 
-    /*
+
     @Inject
     private GameResultDao gameResultDao;
-*/
+
     public void setPlayerName(String playerName) {
         Logger.info("Setting name to {}", playerName);
         this.playerName = playerName;
@@ -175,23 +181,15 @@ public class LabyrinthController {
         stopwatch.start();
     }
 
-    /*private GameResult createGameResult() {
+    private GameResult createGameResult() {
         return GameResult.builder()
                 .player(playerName)
                 .duration(Duration.between(startTime, Instant.now()))
                 .build();
-    }*/
+    }
 
     public void handleGiveUpButton(ActionEvent actionEvent) throws IOException {
 
-        Logger.debug("{} is pressed", ((Button) actionEvent.getSource()).getText());
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/opening.fxml"));
-        Parent root = fxmlLoader.load();
-        OpeningController controller = fxmlLoader.<OpeningController>getController();
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
-        /*
         var buttonText = ((Button) actionEvent.getSource()).getText();
         Logger.debug("{} is pressed", buttonText);
         if (buttonText.equals("Give Up")) {
@@ -199,17 +197,9 @@ public class LabyrinthController {
             Logger.info("The game has been given up");
         }
         Logger.debug("Saving result");
-        System.out.println(gameResultDao);
         gameResultDao.persist(createGameResult());
-
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/scores.fxml"));
-        Parent root = fxmlLoader.load();
-        HighScoreController controller = fxmlLoader.<HighScoreController>getController();
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
-
-     */
+        ControllerHelper.loadAndShowFXML(fxmlLoader, "/fxml/scores.fxml", stage);
     }
 
 

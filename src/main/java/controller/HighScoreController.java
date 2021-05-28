@@ -1,4 +1,4 @@
-/*package controller;
+package controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,6 +16,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.tinylog.Logger;
+import result.GameResult;
+import result.GameResultDao;
 
 
 import javax.inject.Inject;
@@ -100,4 +102,3 @@ public class HighScoreController {
         stage.show();
     }
 }
-*/
