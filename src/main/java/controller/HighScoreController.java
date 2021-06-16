@@ -1,3 +1,4 @@
+/*
 package controller;
 
 import javafx.collections.FXCollections;
@@ -102,3 +103,4 @@ public class HighScoreController {
         stage.show();
     }
 }
+*/

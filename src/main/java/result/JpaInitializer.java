@@ -1,3 +1,4 @@
+/*
 package result;
 
 import com.google.inject.persist.PersistService;
@@ -14,3 +15,4 @@ public class JpaInitializer {
     }
 
 }
+*/

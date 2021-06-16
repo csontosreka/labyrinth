@@ -1,3 +1,4 @@
+/*
 package result;
 
 import com.google.inject.AbstractModule;
@@ -18,3 +19,4 @@ public class PersistenceModule extends AbstractModule {
     }
 
 }
+*/

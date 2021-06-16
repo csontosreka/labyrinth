@@ -24,8 +24,8 @@ import javafx.stage.Stage;
 import model.LabyrinthModel;
 import model.Square;
 import org.tinylog.Logger;
-import result.GameResult;
-import result.GameResultDao;
+//import result.GameResult;
+//import result.GameResultDao;
 
 
 import javax.inject.Inject;
@@ -56,8 +56,8 @@ public class LabyrinthController {
     private String playerName;
 
 
-    @Inject
-    private GameResultDao gameResultDao;
+    //@Inject
+    //private GameResultDao gameResultDao;
 
     public void setPlayerName(String playerName) {
         Logger.info("Setting name to {}", playerName);
@@ -181,15 +181,16 @@ public class LabyrinthController {
         stopwatch.start();
     }
 
-    private GameResult createGameResult() {
+/*    private GameResult createGameResult() {
         return GameResult.builder()
                 .player(playerName)
                 .duration(Duration.between(startTime, Instant.now()))
                 .build();
     }
-
+*/
     public void handleGiveUpButton(ActionEvent actionEvent) throws IOException {
 
+        /*
         var buttonText = ((Button) actionEvent.getSource()).getText();
         Logger.debug("{} is pressed", buttonText);
         if (buttonText.equals("Give Up")) {
@@ -199,7 +200,14 @@ public class LabyrinthController {
         Logger.debug("Saving result");
         gameResultDao.persist(createGameResult());
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        ControllerHelper.loadAndShowFXML(fxmlLoader, "/fxml/scores.fxml", stage);
+        ControllerHelper.loadAndShowFXML(fxmlLoader, "/fxml/opening.fxml", stage);
+        */
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/opening.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
 
